@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MagicSquareMain.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">test (Apr 20, 2017 7:13:11 PM)</a> &gt; <a href="../../index.html" class="el_group">SER216</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">Week6</a> &gt; <span class="el_source">MagicSquareMain.java</span></div><h1>MagicSquareMain.java</h1><pre class="source lang-java linenums">package Week6;
+
+import java.util.Scanner;
+
+<span class="nc" id="L5">public class MagicSquareMain {</span>
+	
+<span class="nc" id="L7">	static double total = 0;</span>
+<span class="nc" id="L8">	static double totalSqRt = 0;</span>
+<span class="nc" id="L9">	static double sum = 0;</span>
+<span class="nc" id="L10">	static double errorCheck = 0;</span>
+	final static int ZERO = 0; //constant zero variable
+<span class="nc" id="L12">	static Boolean boolLoop = true; //used to break out of loops</span>
+<span class="nc" id="L13">	static int count = 0; //used to fill the array</span>
+<span class="nc" id="L14">	static double rowSum = 0;</span>
+	
+	/*
+	* Main method
+	*/
+	public static void main(String[] args){
+		
+		//open instance of scanner
+<span class="nc" id="L22">		Scanner keyboard = new Scanner (System.in);</span>
+		
+		//user greeting
+<span class="nc" id="L25">		System.out.println(&quot;Welcome to the Magic Square program.\n&quot;);</span>
+<span class="nc" id="L26">		System.out.println(&quot;Enter the numbers for your Magic Square.&quot;);</span>
+<span class="nc" id="L27">		System.out.println(&quot;Please remember a Magic Square must contain the proper &quot;</span>
+				+ &quot;amount of numbers to work properly. (i.e. n^3 needs 9 numbers).\n&quot;);
+		
+		//Create the array list
+		//Allowing for any size of array. One dimensional to capture input
+<span class="nc" id="L32">		MagicSquare square = new MagicSquare();</span>
+		
+<span class="nc" id="L34">		int magicSquareArray[] = square.input();</span>
+		
+		
+		//Find square root and sum
+<span class="nc" id="L38">		square.setSize(magicSquareArray.length);</span>
+<span class="nc" id="L39">		total = square.getSize();</span>
+<span class="nc" id="L40">		totalSqRt = square.squareRoot(total);</span>
+<span class="nc" id="L41">		sum = square.sum(total, totalSqRt);</span>
+<span class="nc" id="L42">		errorCheck = square.errorCheck(total,  totalSqRt);</span>
+		//System.out.println(errorCheck); //used for testing
+		
+		//Begin error checking
+		//Check to see if the correct amount of values were entered
+<span class="nc bnc" id="L47" title="All 2 branches missed.">		if (errorCheck &gt; ZERO){</span>
+<span class="nc" id="L48">			count++;</span>
+		}
+		
+		//Check for duplicate values
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (!square.duplicateValues(magicSquareArray)){</span>
+<span class="nc" id="L53">			count++;</span>
+		}
+		
+		
+		//Check first diagonals
+<span class="nc" id="L58">		rowSum = ZERO;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">		if (count &gt; ZERO )</span>
+<span class="nc" id="L60">			System.out.println(&quot;your magic square failed&quot;);</span>
+		else{
+<span class="nc" id="L62">			rowSum = square.firstDiagonal(magicSquareArray);</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (sum == rowSum){</span>
+<span class="nc" id="L64">				System.out.println(&quot;first diag is good&quot;); //used during testing</span>
+<span class="nc" id="L65">				count = 0;</span>
+<span class="nc" id="L66">			}</span>
+			else{
+<span class="nc" id="L68">				count++;</span>
+<span class="nc" id="L69">				System.out.println(&quot;first diag failed&quot;); //used during testing</span>
+			}
+		}
+		
+		//reset loop parameters
+<span class="nc" id="L74">		rowSum = ZERO;</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		if (count &gt; ZERO )</span>
+<span class="nc" id="L76">			System.out.println(&quot;Hey your magic square failed&quot;);</span>
+		else{
+			//check second diagonals
+<span class="nc" id="L79">			rowSum = square.secondDiagonal(magicSquareArray);</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			if (sum == rowSum){</span>
+<span class="nc" id="L81">				boolLoop = false;</span>
+<span class="nc" id="L82">				System.out.println(&quot;second diag is good&quot;); //used during testing</span>
+<span class="nc" id="L83">			}</span>
+			else{
+<span class="nc" id="L85">				boolLoop = false;</span>
+<span class="nc" id="L86">				count++; //used to break and discontinue looping</span>
+<span class="nc" id="L87">				System.out.println(&quot;second diag failed&quot;); //used during testing</span>
+			}
+		}
+		
+		//reset loop parameters
+<span class="nc" id="L92">		rowSum = ZERO;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">		if (count &gt; ZERO )</span>
+<span class="nc" id="L94">			System.out.println(&quot;your magic square failed&quot;);</span>
+		else{
+			//check rows
+<span class="nc" id="L97">			rowSum = square.rows(magicSquareArray);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">			if (sum == rowSum){</span>
+<span class="nc" id="L99">				System.out.println(&quot;first row is good&quot;); //used during testing</span>
+<span class="nc" id="L100">			}</span>
+			else{
+<span class="nc" id="L102">				count++; //used to break and discontinue looping</span>
+<span class="nc" id="L103">				System.out.println(&quot;first row failed&quot;); //used during testing</span>
+			}
+		}
+		
+		//reset loop parameters
+<span class="nc bnc" id="L108" title="All 2 branches missed.">		if (count &gt; ZERO )</span>
+<span class="nc" id="L109">			System.out.println(&quot;Your magic square failed&quot;);</span>
+		else{
+			//check columns
+<span class="nc" id="L112">			rowSum = square.columns(magicSquareArray);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">			if (sum == rowSum){</span>
+<span class="nc" id="L114">				System.out.println(&quot;first column is good&quot;); //used during testing</span>
+<span class="nc" id="L115">			}</span>
+			else{
+<span class="nc" id="L117">				count++; //used to break and discontinue looping</span>
+<span class="nc" id="L118">				System.out.println(&quot;first column failed&quot;); //used during testing</span>
+			}
+		}		
+		
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		if (count == 0)</span>
+<span class="nc" id="L123">			System.out.println(&quot;True&quot;);</span>
+		else
+<span class="nc" id="L125">			System.out.println(&quot;False&quot;);</span>
+		
+<span class="nc" id="L127">		keyboard.close();</span>
+<span class="nc" id="L128">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>test (Apr 20, 2017 7:13:11 PM)</div></body></html>

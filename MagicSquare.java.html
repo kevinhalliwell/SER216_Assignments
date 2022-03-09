@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MagicSquare.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">test (Apr 20, 2017 7:13:11 PM)</a> &gt; <a href="../../index.html" class="el_group">SER216</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">Week6</a> &gt; <span class="el_source">MagicSquare.java</span></div><h1>MagicSquare.java</h1><pre class="source lang-java linenums">package Week6;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * @author Kevin Halliwell
+ * 
+ */
+public class MagicSquare{
+	
+	/**
+	 * Variables
+	 */
+<span class="fc" id="L15">	Boolean boolLoop = true; //used to break out of loops</span>
+<span class="fc" id="L16">	double total = 0; //total number of values entered size of the array</span>
+<span class="fc" id="L17">	double totalSqRt = 0; //square root of the total values entered</span>
+<span class="fc" id="L18">	double sum = 0; //used to find sum for comparison</span>
+<span class="fc" id="L19">	int rowSum = 0; //used to find sums of diagonals, rows, and columns</span>
+<span class="fc" id="L20">	int value = 0; //used to find value of array location</span>
+<span class="fc" id="L21">	int valueCounter = 0; //used to adjust value when finding columns</span>
+	final static int ZERO = 0; //constant zero variable
+	final static int ONE = 1; //constant one variable
+	final static int TWO = 2; //constant two variable
+<span class="fc" id="L25">	double errorCheck = 0; //used to determine if the right amount of numbers were entered</span>
+
+	/**
+	 * Used to check for duplicate values 
+	 * @param array
+	 * @return boolean
+	 */
+	public boolean duplicateValues(int[] array){
+<span class="fc bfc" id="L33" title="All 2 branches covered.">	    for (int i = ZERO; i &lt; array.length - ONE; i++) {</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">	        for (int j = i + ONE; j &lt; array.length; j++) {</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">	             if (array[i] == array[j]) {</span>
+<span class="fc" id="L36">	                 return false;</span>
+	             }
+	        }
+	    }              
+<span class="fc" id="L40">	    return true;          </span>
+	}
+	
+	/*
+	 * Magic square constructor. Initializes variables
+	 */
+<span class="fc" id="L46">	public MagicSquare(){</span>
+		
+<span class="fc" id="L48">		boolLoop = true; </span>
+<span class="fc" id="L49">		total = 0;</span>
+<span class="fc" id="L50">		totalSqRt = 0;</span>
+<span class="fc" id="L51">		sum = 0;</span>
+<span class="fc" id="L52">		rowSum = 0;</span>
+<span class="fc" id="L53">		value = 0;</span>
+<span class="fc" id="L54">		valueCounter = 0;</span>
+<span class="fc" id="L55">		errorCheck = 0; </span>
+		
+<span class="fc" id="L57">	}</span>
+	
+	/*
+	 * Input method. Gathers integer input from the user.
+	 * @return int[] 
+	 */
+	public int[] input(){
+		//open instance of scanner
+<span class="nc" id="L65">		Scanner keyboard = new Scanner (System.in);</span>
+		
+<span class="nc" id="L67">		ArrayList&lt;Integer&gt; ints = new ArrayList&lt;Integer&gt;();</span>
+		
+		//loop to get user input
+		//Prompt user for input and store in an array list
+<span class="nc" id="L71">		System.out.println(&quot;Numbers can be entered using a space ('8 1 6') or on&quot;</span>
+				+ &quot; separate lines. Numbers cannot repeat.&quot;);
+<span class="nc" id="L73">		System.out.println(&quot;Enter 'done' or any noninteger character when you are done&quot;</span>
+				+ &quot; entering numbers.&quot;);
+<span class="nc bnc" id="L75" title="All 2 branches missed.">		while (keyboard.hasNextInt()){ //Start looping to get input from user</span>
+
+<span class="nc" id="L77">			ints.add(keyboard.nextInt());</span>
+			
+		}//End of looping for input from user
+		
+<span class="nc" id="L81">		keyboard.close();</span>
+		
+		//Create the array for the magic square
+		int magicSquareArray[];
+<span class="nc" id="L85">		magicSquareArray = new int[ints.size()];</span>
+						
+		//Fill the array from the array list
+<span class="nc bnc" id="L88" title="All 2 branches missed.">		for (int i = ZERO; i &lt; ints.size(); i++){</span>
+<span class="nc" id="L89">				magicSquareArray[i] = ints.get(i);</span>
+		}
+<span class="nc" id="L91">		return magicSquareArray;</span>
+	}
+	
+	/*
+	 * Finds the square root of the total number of values entered.
+	 * @param double a
+	 * @return totalSqRt
+	 */
+	public double squareRoot(double a){
+<span class="fc" id="L100">		totalSqRt = Math.sqrt(a);</span>
+<span class="fc" id="L101">		return totalSqRt;</span>
+	}
+	
+	/*
+	 * Sets the size of the array.
+	 * @param int a
+	 */
+	public void setSize(int a){
+<span class="fc" id="L109">		total = a;</span>
+<span class="fc" id="L110">	}</span>
+	
+	/*
+	 * Gets the size of the array. Used for calculations.
+	 * @return total
+	 */
+	public double getSize(){
+<span class="fc" id="L117">		return total;</span>
+	}
+	
+	/*
+	 * Computes and returns the sum of the magic square.
+	 * @param double a, b
+	 * @return sum
+	 */
+	public double sum(double a, double b){
+<span class="fc" id="L126">		sum = ((a+ONE)/TWO) * b;</span>
+<span class="fc" id="L127">		return sum;</span>
+	}
+	
+	/*
+	 * Ensures the correct number of values was entered.
+	 * @param double a, b
+	 * @return errorCheck
+	 */
+	public double errorCheck(double a, double b){
+<span class="fc" id="L136">		errorCheck = a % b;</span>
+<span class="fc" id="L137">		return errorCheck;</span>
+	}
+	
+	/*
+	 * Computes the value of the first diagonal
+	 * @param int[] a
+	 * @return rowSum
+	 */
+	public double firstDiagonal(int[] a){
+<span class="fc" id="L146">		rowSum = ZERO;</span>
+<span class="fc" id="L147">		value = ZERO;</span>
+<span class="fc" id="L148">		boolLoop = true;</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">		while (boolLoop){</span>
+<span class="fc" id="L150">			value = ZERO;</span>
+
+<span class="fc bfc" id="L152" title="All 2 branches covered.">			for (int i = ZERO; i &lt; totalSqRt; i++){</span>
+<span class="fc" id="L153">				rowSum += a[value];</span>
+				//This adds the square root + 1 to the next index
+				//For a magic square with 9 values this would traverse the array at indexes
+				//[0], [4], and [8] giving the user one diagonal
+<span class="fc" id="L157">				value += (totalSqRt + ONE);</span>
+			}
+<span class="fc bfc" id="L159" title="All 2 branches covered.">			if (sum(getSize(), squareRoot(total)) == rowSum){</span>
+<span class="fc" id="L160">				boolLoop = false;</span>
+<span class="fc" id="L161">			}</span>
+			else
+<span class="fc" id="L163">				boolLoop = false;</span>
+		}
+<span class="fc" id="L165">		value = ZERO;</span>
+<span class="fc" id="L166">		return rowSum;</span>
+	}
+	
+	/*
+	 * Computes the value of the second diagonal
+	 * @param int[] a
+	 * @return rowSum
+	 */
+	public double secondDiagonal(int[]a){
+<span class="fc" id="L175">		rowSum = ZERO;</span>
+<span class="fc" id="L176">		value = ZERO;</span>
+<span class="fc" id="L177">		boolLoop = true;</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">		while (boolLoop){</span>
+<span class="fc" id="L179">			value = (int) (totalSqRt - ONE);</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">			for (int i = ZERO; i &lt; totalSqRt; i++){</span>
+<span class="fc" id="L181">				rowSum += a[value];</span>
+				//This adds the square root - 1 to the next index
+				//For a magic square with 9 values this would traverse the array at indexes
+				//[2], [4], and [6] giving the user the second diagonal
+<span class="fc" id="L185">				value += (int) (totalSqRt - ONE);</span>
+			}
+<span class="fc bfc" id="L187" title="All 2 branches covered.">			if (sum(getSize(), squareRoot(total)) == rowSum){</span>
+<span class="fc" id="L188">				boolLoop = false;</span>
+<span class="fc" id="L189">			}</span>
+			else 
+<span class="fc" id="L191">				boolLoop = false;</span>
+		}
+<span class="fc" id="L193">		value = ZERO;</span>
+<span class="fc" id="L194">		return rowSum;</span>
+	}
+	
+	/*
+	 * Computes the value of the rows
+	 * @param int[] a
+	 * @return rowSum
+	 */
+	public double rows(int[] a){
+<span class="fc" id="L203">		rowSum = ZERO;</span>
+<span class="fc" id="L204">		value = ZERO;</span>
+<span class="fc" id="L205">		boolLoop = true;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">		while (boolLoop){</span>
+			
+<span class="fc bfc" id="L208" title="All 2 branches covered.">			for (int i = ZERO; i &lt; totalSqRt; i++){</span>
+<span class="fc" id="L209">				rowSum += a[value];</span>
+				//This increase the value by one starting from zero
+				//For a magic square with 9 values this would traverse the array at indexes
+				//[0], [1], and [2] (and so on) giving the user each row's sum.
+				//If the rowSum is == to sum the next row is checked.
+<span class="fc" id="L214">				value ++;</span>
+			}
+<span class="fc bfc" id="L216" title="All 2 branches covered.">			if (sum(getSize(), squareRoot(total)) == rowSum){</span>
+				//System.out.println(&quot;first row is good&quot;); //used during testing
+<span class="fc bfc" id="L218" title="All 2 branches covered.">				if (value &gt;= total){</span>
+<span class="fc" id="L219">					boolLoop = false;</span>
+<span class="fc" id="L220">				}</span>
+				else {
+<span class="fc" id="L222">					boolLoop = true;</span>
+<span class="fc" id="L223">					rowSum = 0;</span>
+				}
+<span class="fc" id="L225">			}</span>
+			else
+<span class="fc" id="L227">				boolLoop = false;</span>
+		}
+<span class="fc" id="L229">		value = ZERO;</span>
+<span class="fc" id="L230">		return rowSum;</span>
+	}
+	
+	/*
+	 * Computes the value of the columns
+	 * @param int[] a
+	 * @return rowSum
+	 */
+	public double columns(int[] a){
+<span class="fc" id="L239">		rowSum = ZERO;</span>
+<span class="fc" id="L240">		value = ZERO;</span>
+<span class="fc" id="L241">		valueCounter = ZERO;</span>
+<span class="fc" id="L242">		boolLoop = true;</span>
+<span class="fc bfc" id="L243" title="All 2 branches covered.">		while (boolLoop){</span>
+			
+<span class="fc bfc" id="L245" title="All 2 branches covered.">			for (int i = ZERO; i &lt; totalSqRt; i++){</span>
+<span class="fc" id="L246">				rowSum += a[value];</span>
+				//This increase the value of the square root.
+				//For a magic square with 9 values this would traverse the array at indexes
+				//[0], [3], and [6] (and so on) giving the user each column's sum.
+				//If the rowSum is == to sum the next column is checked.
+<span class="fc" id="L251">				value += totalSqRt;</span>
+			}
+<span class="fc bfc" id="L253" title="All 2 branches covered.">			if (sum(getSize(), squareRoot(total)) == rowSum){</span>
+				//System.out.println(&quot;first column is good&quot;); //used during testing
+<span class="fc" id="L255">				valueCounter++;</span>
+<span class="fc" id="L256">				value = valueCounter;</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">				if (valueCounter &lt; totalSqRt){</span>
+<span class="fc" id="L258">					boolLoop = true;</span>
+<span class="fc" id="L259">					rowSum = ZERO;</span>
+<span class="fc" id="L260">				}</span>
+				else {
+<span class="fc" id="L262">					boolLoop = false;</span>
+				}
+<span class="fc" id="L264">			}</span>
+			else{
+<span class="fc" id="L266">				boolLoop = false;</span>
+			}
+		}
+<span class="fc" id="L269">		value = ZERO;</span>
+<span class="fc" id="L270">		return rowSum;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>test (Apr 20, 2017 7:13:11 PM)</div></body></html>
